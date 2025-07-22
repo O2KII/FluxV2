@@ -521,7 +521,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		Tab.Parent = TabHold
 		Tab.BackgroundColor3 = PresetColor
 		Tab.BorderSizePixel = 0
-		Tab.Size = UDim2.new(0, 205, 0, 40)
+		Tab.Size = UDim2.new(0, leftPanelWidth, 0, 40)
 		Tab.AutoButtonColor = false
 		Tab.Font = Enum.Font.SourceSans
 		Tab.Text = ""
@@ -712,7 +712,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ArrowBtn.Parent = Button
 			ArrowBtn.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
 			ArrowBtn.BackgroundTransparency = 1.000
-			ArrowBtn.Position = UDim2.new(0.903719902, 0, 0, 0)
+			ArrowBtn.Position = UDim2.new(isMobile and 0.85 or 0.903719902, 0, 0, 0)
 			ArrowBtn.Size = UDim2.new(0, 33, 0, 37)
 			ArrowBtn.SliceCenter = Rect.new(30, 30, 30, 30)
 			ArrowBtn.SliceScale = 7.000
@@ -955,7 +955,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ArrowBtn.Parent = Toggle
 			ArrowBtn.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
 			ArrowBtn.BackgroundTransparency = 1.000
-			ArrowBtn.Position = UDim2.new(0.903719902, 0, 0, 0)
+			ArrowBtn.Position = UDim2.new(isMobile and 0.85 or 0.903719902, 0, 0, 0)
 			ArrowBtn.Size = UDim2.new(0, 33, 0, 37)
 			ArrowBtn.SliceCenter = Rect.new(30, 30, 30, 30)
 			ArrowBtn.SliceScale = 7.000
@@ -1229,7 +1229,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ArrowBtn.Parent = Slider
 			ArrowBtn.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
 			ArrowBtn.BackgroundTransparency = 1.000
-			ArrowBtn.Position = UDim2.new(0.903719902, 0, 0, 0)
+			ArrowBtn.Position = UDim2.new(isMobile and 0.85 or 0.903719902, 0, 0, 0)
 			ArrowBtn.Size = UDim2.new(0, 33, 0, 37)
 			ArrowBtn.SliceCenter = Rect.new(30, 30, 30, 30)
 			ArrowBtn.SliceScale = 7.000
@@ -1249,7 +1249,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Value.Parent = Title
 			Value.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Value.BackgroundTransparency = 1.000
-			Value.Position = UDim2.new(2.27693367, 0, 0, 0)
+			Value.Position = UDim2.new(isMobile and 1.8 or 2.27693367, 0, 0, 0)
 			Value.Size = UDim2.new(0, 113, 0, 41)
 			Value.Font = Enum.Font.Gotham
 			Value.Text = tostring(start and math.floor((start / max) * (start - min) + min) or 0)
@@ -1488,7 +1488,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ArrowIco.AnchorPoint = Vector2.new(0.5, 0.5)
 			ArrowIco.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			ArrowIco.BackgroundTransparency = 1.000
-			ArrowIco.Position = UDim2.new(3.45979357, 0, 0.508096159, 0)
+			ArrowIco.Position = UDim2.new(isMobile and 2.8 or 3.45979357, 0, 0.508096159, 0)
 			ArrowIco.Selectable = true
 			ArrowIco.Size = UDim2.new(0, 28, 0, 24)
 			ArrowIco.Image = "http://www.roblox.com/asset/?id=6035047377"
@@ -2028,7 +2028,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Color.Parent = Title
 			Color.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
 			Color.Position = UDim2.new(0, -23, 0, 46)
-			Color.Size = UDim2.new(0, 246, 0, 80)
+			Color.Size = UDim2.new(0, isMobile and 200 or 246, 0, isMobile and 65 or 80)
 			Color.ZIndex = 10
 			Color.Image = "rbxassetid://4155801252"
 
@@ -2051,8 +2051,8 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Toggle.Parent = Title
 			Toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Toggle.BackgroundTransparency = 1.000
-			Toggle.Position = UDim2.new(2.37430048, 0, 1.07157099, 0)
-			Toggle.Size = UDim2.new(0, 137, 0, 38)
+			Toggle.Position = UDim2.new(isMobile and 1.8 or 2.37430048, 0, 1.07157099, 0)
+			Toggle.Size = UDim2.new(0, isMobile and 120 or 137, 0, 38)
 			Toggle.Font = Enum.Font.Gotham
 			Toggle.Text = "Rainbow"
 			Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2084,8 +2084,8 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Confirm.Parent = Title
 			Confirm.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Confirm.ClipsDescendants = true
-			Confirm.Position = UDim2.new(2.3791616, 0, 1.97633278, 0)
-			Confirm.Size = UDim2.new(0, 144, 0, 42)
+			Confirm.Position = UDim2.new(isMobile and 1.8 or 2.3791616, 0, 1.97633278, 0)
+			Confirm.Size = UDim2.new(0, isMobile and 125 or 144, 0, 42)
 			Confirm.AutoButtonColor = false
 			Confirm.Font = Enum.Font.SourceSans
 			Confirm.Text = ""
@@ -2111,7 +2111,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			BoxColor.Name = "BoxColor"
 			BoxColor.Parent = Title
 			BoxColor.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			BoxColor.Position = UDim2.new(3.26915574, 0, 0.261904776, 0)
+			BoxColor.Position = UDim2.new(isMobile and 2.6 or 3.26915574, 0, 0.261904776, 0)
 			BoxColor.Size = UDim2.new(0, 35, 0, 19)
 
 			BoxColorCorner.CornerRadius = UDim.new(0, 4)
@@ -2122,7 +2122,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ToggleBtn.Parent = Toggle
 			ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			ToggleBtn.BackgroundTransparency = 1.000
-			ToggleBtn.Size = UDim2.new(0, 137, 0, 38)
+			ToggleBtn.Size = UDim2.new(0, isMobile and 120 or 137, 0, 38)
 			ToggleBtn.Font = Enum.Font.SourceSans
 			ToggleBtn.Text = ""
 			ToggleBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -2538,7 +2538,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			TextboxFrame.Parent = Title
 			TextboxFrame.BackgroundColor3 = Color3.fromRGB(50, 53, 59)
 			TextboxFrame.Position = UDim2.new(1.82300889, 0, 0.202380955, 0)
-			TextboxFrame.Size = UDim2.new(0, 161, 0, 26)
+			TextboxFrame.Size = UDim2.new(0, isMobile and 140 or 161, 0, 26)
 
 			TextboxFrameCorner.CornerRadius = UDim.new(0, 4)
 			TextboxFrameCorner.Name = "TextboxFrameCorner"
@@ -2547,7 +2547,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			TextBox.Parent = TextboxFrame
 			TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			TextBox.BackgroundTransparency = 1.000
-			TextBox.Size = UDim2.new(0, 161, 0, 26)
+			TextBox.Size = UDim2.new(0, isMobile and 140 or 161, 0, 26)
 			TextBox.Font = Enum.Font.Gotham
 			TextBox.Text = ""
 			TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2558,7 +2558,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ArrowBtn.Parent = Textbox
 			ArrowBtn.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
 			ArrowBtn.BackgroundTransparency = 1.000
-			ArrowBtn.Position = UDim2.new(0.903719902, 0, 0, 0)
+			ArrowBtn.Position = UDim2.new(isMobile and 0.85 or 0.903719902, 0, 0, 0)
 			ArrowBtn.Size = UDim2.new(0, 33, 0, 37)
 			ArrowBtn.SliceCenter = Rect.new(30, 30, 30, 30)
 			ArrowBtn.SliceScale = 7.000
@@ -2749,7 +2749,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			BindLabel.Parent = Title
 			BindLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			BindLabel.BackgroundTransparency = 1.000
-			BindLabel.Position = UDim2.new(2.56011987, 0, 0, 0)
+			BindLabel.Position = UDim2.new(isMobile and 1.9 or 2.56011987, 0, 0, 0)
 			BindLabel.Size = UDim2.new(0, 113, 0, 42)
 			BindLabel.Font = Enum.Font.Gotham
 			BindLabel.Text = Key
