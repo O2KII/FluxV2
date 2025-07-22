@@ -7,6 +7,10 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
 
+-- MOBILE TESTING: Uncomment the lines below to force mobile mode for testing
+ UserInputService.TouchEnabled = true
+ UserInputService.KeyboardEnabled = false
+
 local FluxLib = Instance.new("ScreenGui")
 FluxLib.Name = "FluxLib"
 FluxLib.Parent = game.CoreGui
