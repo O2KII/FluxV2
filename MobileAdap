@@ -96,7 +96,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	local fs = false
 	
 	-- Mobile detection and screen size calculation
-	local forceMobile = true -- Set to true for testing mobile mode
+	local forceMobile = false -- Set to true for testing mobile mode
 	local isMobile = forceMobile or (UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled)
 	local screenSize = workspace.CurrentCamera.ViewportSize
 	local scaleFactor = math.min(screenSize.X / 1920, screenSize.Y / 1080) -- Base scale on 1920x1080
@@ -215,15 +215,16 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	-- Mobile minimize button
 	MinimizeBtn.Name = "MinimizeBtn"
 	MinimizeBtn.Parent = MainFrame
-	MinimizeBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+	MinimizeBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	MinimizeBtn.BorderSizePixel = 0
 	MinimizeBtn.Position = UDim2.new(1, -40, 0, 8)
 	MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
 	MinimizeBtn.Font = Enum.Font.GothamBold
-	MinimizeBtn.Text = "−"
+	MinimizeBtn.Text = "X"
 	MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-	MinimizeBtn.TextSize = 20
+	MinimizeBtn.TextSize = 16
 	MinimizeBtn.Visible = isMobile
+	MinimizeBtn.ZIndex = 100
 
 	MinimizeBtnCorner.CornerRadius = UDim.new(0, 4)
 	MinimizeBtnCorner.Parent = MinimizeBtn
@@ -232,12 +233,13 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	RestoreBtn.Name = "RestoreBtn"
 	RestoreBtn.Parent = FluxLib
 	RestoreBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	RestoreBtn.BackgroundTransparency = 0.5
 	RestoreBtn.BorderSizePixel = 1
 	RestoreBtn.BorderColor3 = Color3.fromRGB(60, 60, 60)
 	RestoreBtn.Position = UDim2.new(0.5, -20, 0, 10)
 	RestoreBtn.Size = UDim2.new(0, 40, 0, 40)
 	RestoreBtn.Font = Enum.Font.GothamBold
-	RestoreBtn.Text = "✕"
+	RestoreBtn.Text = "X"
 	RestoreBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 	RestoreBtn.TextSize = 18
 	RestoreBtn.Visible = false
@@ -268,11 +270,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	
 	-- Minimize button hover effects
 	MinimizeBtn.MouseEnter:Connect(function()
-		TweenService:Create(MinimizeBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(70, 70, 70)}):Play()
+		TweenService:Create(MinimizeBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
 	end)
 	
 	MinimizeBtn.MouseLeave:Connect(function()
-		TweenService:Create(MinimizeBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(45, 45, 45)}):Play()
+		TweenService:Create(MinimizeBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
 	end)
 	
 	-- Restore button functionality
@@ -285,11 +287,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	
 	-- Restore button hover effects
 	RestoreBtn.MouseEnter:Connect(function()
-		TweenService:Create(RestoreBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+		TweenService:Create(RestoreBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundTransparency = 0.3}):Play()
 	end)
 	
 	RestoreBtn.MouseLeave:Connect(function()
-		TweenService:Create(RestoreBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
+		TweenService:Create(RestoreBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundTransparency = 0.5}):Play()
 	end)
 	
 	UserInputService.InputBegan:Connect(
@@ -878,7 +880,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Title.Font = Enum.Font.Gotham
 			Title.Text = text
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Title.TextSize = 15.000
+			Title.TextSize = textSize
 			Title.TextTransparency = 0.300
 			Title.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -936,7 +938,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Description.Font = Enum.Font.Gotham
 			Description.Text = desc
 			Description.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Description.TextSize = 15.000
+			Description.TextSize = descTextSize
 			Description.TextTransparency = 1
 			Description.TextWrapped = true
 			Description.TextXAlignment = Enum.TextXAlignment.Left
@@ -1149,7 +1151,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Title.Font = Enum.Font.Gotham
 			Title.Text = text
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Title.TextSize = 15.000
+			Title.TextSize = textSize
 			Title.TextTransparency = 0.300
 			Title.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -1188,7 +1190,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Description.Font = Enum.Font.Gotham
 			Description.Text = desc
 			Description.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Description.TextSize = 15.000
+			Description.TextSize = descTextSize
 			Description.TextTransparency = 0.300
 			Description.TextWrapped = true
 			Description.TextXAlignment = Enum.TextXAlignment.Left
@@ -1242,9 +1244,9 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Value.Position = UDim2.new(2.27693367, 0, 0, 0)
 			Value.Size = UDim2.new(0, 113, 0, 41)
 			Value.Font = Enum.Font.Gotham
-			Value.Text = tostring(start and math.floor((start / max) * (max - min) + min) or 0)
+			Value.Text = tostring(start and math.floor((start / max) * (start - min) + min) or 0)
 			Value.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Value.TextSize = 15.000
+			Value.TextSize = textSize
 			Value.TextTransparency = 0.300
 			Value.TextXAlignment = Enum.TextXAlignment.Right
 			
@@ -1444,7 +1446,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Title.Font = Enum.Font.Gotham
 			Title.Text = text
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Title.TextSize = 15.000
+			Title.TextSize = textSize
 			Title.TextTransparency = 0.300
 			Title.TextXAlignment = Enum.TextXAlignment.Left
 
