@@ -96,7 +96,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	local fs = false
 	
 	-- Mobile detection and screen size calculation
-	local forceMobile = true -- Set to true for testing mobile mode
+	local forceMobile = false -- Set to true for testing mobile mode
 	local isMobile = forceMobile or (UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled)
 	local screenSize = workspace.CurrentCamera.ViewportSize
 	local scaleFactor = math.min(screenSize.X / 1920, screenSize.Y / 1080) -- Base scale on 1920x1080
