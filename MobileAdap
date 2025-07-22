@@ -115,6 +115,14 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	local sliderHeight = isMobile and 50 or 60 -- Smaller slider on mobile
 	local textSize = isMobile and 13 or 15 -- Smaller text on mobile
 	local descTextSize = isMobile and 12 or 15 -- Even smaller description text
+	local expandedHeight = isMobile and 65 or 74 -- Expanded element height
+	local sliderExpandedHeight = isMobile and 85 or 101 -- Expanded slider height
+	local colorpickerExpandedHeight = isMobile and 115 or 138 -- Expanded colorpicker height
+	local textboxExpandedHeight = isMobile and 68 or 81 -- Expanded textbox height
+	-- Dropdown item heights based on count
+	local dropdownHeight1 = isMobile and 65 or 78 -- 1 item dropdown height
+	local dropdownHeight2 = isMobile and 90 or 107 -- 2 item dropdown height  
+	local dropdownHeight3 = isMobile and 110 or 133 -- 3+ item dropdown height
 	
 	local MainFrame = Instance.new("Frame")
 	local MainCorner = Instance.new("UICorner")
@@ -742,7 +750,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
 				if BtnDescToggled == false then
-					Button:TweenSize(UDim2.new(0, 457, 0, 74), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Button:TweenSize(UDim2.new(0, elementWidth, 0, expandedHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -786,7 +794,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					wait(.4)
 					Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 				else
-					Button:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Button:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1001,7 +1009,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
 				if ToggleDescToggled == false then
-					Toggle:TweenSize(UDim2.new(0, 457, 0, 74), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Toggle:TweenSize(UDim2.new(0, elementWidth, 0, expandedHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1045,7 +1053,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					wait(.4)
 					Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 				else
-					Toggle:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Toggle:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1200,7 +1208,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			SlideFrame.BackgroundColor3 = Color3.fromRGB(235, 234, 235)
 			SlideFrame.BorderSizePixel = 0
 			SlideFrame.Position = UDim2.new(-0.197140202, 0, 0.986091495, 0)
-			SlideFrame.Size = UDim2.new(0, 426, 0, 3)
+			SlideFrame.Size = UDim2.new(0, elementWidth - 31, 0, 3)
 
 			CurrentValueFrame.Name = "CurrentValueFrame"
 			CurrentValueFrame.Parent = SlideFrame
@@ -1252,7 +1260,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
 				if SliderDescToggled == false then
-					Slider:TweenSize(UDim2.new(0, 457, 0, 101), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Slider:TweenSize(UDim2.new(0, elementWidth, 0, sliderExpandedHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1301,7 +1309,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					wait(.4)
 					Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 				else
-					Slider:TweenSize(UDim2.new(0, 457, 0, 60), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Slider:TweenSize(UDim2.new(0, elementWidth, 0, sliderHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1407,7 +1415,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		function ContainerContent:Dropdown(text,list,callback)
 			local DropFunc = {}
 			local Selected = text
-			local FrameSize = 43
+			local FrameSize = elementHeight
 			local ItemCount = 0
 			local DropToggled = false
 			local Dropdown = Instance.new("TextButton")
@@ -1493,7 +1501,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			DropItemHolder.BackgroundTransparency = 1.000
 			DropItemHolder.BorderSizePixel = 0
 			DropItemHolder.Position = UDim2.new(-0.203539819, 0, 1.02380955, 0)
-			DropItemHolder.Size = UDim2.new(0, 436, 0, 82)
+			DropItemHolder.Size = UDim2.new(0, elementWidth - 21, 0, 82)
 			DropItemHolder.CanvasSize = UDim2.new(0, 0, 0, 0)
 			DropItemHolder.ScrollBarThickness = 5
 			DropItemHolder.ScrollBarImageColor3 = Color3.fromRGB(41, 42, 48)
@@ -1523,7 +1531,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Dropdown.MouseButton1Click:Connect(function()
 				if DropToggled == false then
 					Title.Text = Selected
-					Dropdown:TweenSize(UDim2.new(0, 457, 0, FrameSize), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Dropdown:TweenSize(UDim2.new(0, elementWidth, 0, FrameSize), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1563,7 +1571,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 				else
 					Title.Text = Selected
-					Dropdown:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Dropdown:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1609,11 +1617,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				ItemCount = ItemCount + 1
 				
 				if ItemCount == 1 then
-					FrameSize = 78
+					FrameSize = dropdownHeight1
 				elseif ItemCount == 2 then
-					FrameSize = 107
+					FrameSize = dropdownHeight2
 				elseif ItemCount >= 3 then
-					FrameSize = 133
+					FrameSize = dropdownHeight3
 				end
 				local Item = Instance.new("TextButton")
 				local ItemCorner = Instance.new("UICorner")
@@ -1622,12 +1630,12 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Item.Parent = DropItemHolder
 			Item.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Item.ClipsDescendants = true
-			Item.Size = UDim2.new(0, 427, 0, 25)
+			Item.Size = UDim2.new(0, elementWidth - 30, 0, 25)
 			Item.AutoButtonColor = false
 			Item.Font = Enum.Font.Gotham
 			Item.Text = v
 			Item.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Item.TextSize = 15.000
+			Item.TextSize = textSize
 			Item.TextTransparency = 0.300
 
 			ItemCorner.CornerRadius = UDim.new(0, 4)
@@ -1656,7 +1664,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					Title.Text = text
 					Selected = v
 					DropToggled = not DropToggled
-					Dropdown:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Dropdown:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1701,11 +1709,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				ItemCount = ItemCount + 1
 
 				if ItemCount == 1 then
-					FrameSize = 78
+					FrameSize = dropdownHeight1
 				elseif ItemCount == 2 then
-					FrameSize = 107
+					FrameSize = dropdownHeight2
 				elseif ItemCount >= 3 then
-					FrameSize = 133
+					FrameSize = dropdownHeight3
 				end
 				local Item = Instance.new("TextButton")
 				local ItemCorner = Instance.new("UICorner")
@@ -1714,12 +1722,12 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				Item.Parent = DropItemHolder
 				Item.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 				Item.ClipsDescendants = true
-				Item.Size = UDim2.new(0, 427, 0, 25)
+				Item.Size = UDim2.new(0, elementWidth - 30, 0, 25)
 				Item.AutoButtonColor = false
 				Item.Font = Enum.Font.Gotham
 				Item.Text = addtext
 				Item.TextColor3 = Color3.fromRGB(255, 255, 255)
-				Item.TextSize = 15.000
+				Item.TextSize = textSize
 				Item.TextTransparency = 0.300
 
 				ItemCorner.CornerRadius = UDim.new(0, 4)
@@ -1748,7 +1756,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					Title.Text = text
 					Selected = addtext
 					DropToggled = not DropToggled
-					Dropdown:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Dropdown:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1789,7 +1797,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				end)
 				if DropToggled == true then
 					Title.Text = Selected
-					Dropdown:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Dropdown:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1840,7 +1848,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				end
 				if DropToggled == true then
 					Title.Text = Selected
-					Dropdown:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Dropdown:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2140,7 +2148,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				if ColorPickerToggled == false then
 					ColorSelection.Visible = true
 					HueSelection.Visible = true
-					Colorpicker:TweenSize(UDim2.new(0, 457, 0, 138), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Colorpicker:TweenSize(UDim2.new(0, elementWidth, 0, colorpickerExpandedHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2166,7 +2174,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 				else
 					ColorSelection.Visible = false
 					HueSelection.Visible = false
-					Colorpicker:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Colorpicker:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2354,7 +2362,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Confirm.MouseButton1Click:Connect(
 				function()
 					ColorPickerToggled = not ColorPickerToggled
-					Colorpicker:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Colorpicker:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2580,7 +2588,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
 				if TextboxDescToggled == false then
-					Textbox:TweenSize(UDim2.new(0, 457, 0, 81), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Textbox:TweenSize(UDim2.new(0, elementWidth, 0, textboxExpandedHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2624,7 +2632,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 					wait(.4)
 					Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 				else
-					Textbox:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
+					Textbox:TweenSize(UDim2.new(0, elementWidth, 0, elementHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
