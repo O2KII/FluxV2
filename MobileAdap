@@ -7,9 +7,8 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
 
--- MOBILE TESTING: Uncomment the lines below to force mobile mode for testing
- UserInputService.TouchEnabled = true
- UserInputService.KeyboardEnabled = false
+
+local forceMobile = true
 
 local FluxLib = Instance.new("ScreenGui")
 FluxLib.Name = "FluxLib"
@@ -97,7 +96,8 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	local fs = false
 	
 	-- Mobile detection and screen size calculation
-	local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+	local forceMobile = true 
+	local isMobile = forceMobile or (UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled)
 	local screenSize = workspace.CurrentCamera.ViewportSize
 	local scaleFactor = math.min(screenSize.X / 1920, screenSize.Y / 1080) -- Base scale on 1920x1080
 	scaleFactor = math.max(scaleFactor, 0.5) -- Minimum scale factor
