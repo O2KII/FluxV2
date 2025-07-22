@@ -7,8 +7,8 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
 
-
-local forceMobile = true
+-- MOBILE TESTING: Uncomment the line below to force mobile mode for testing
+-- local forceMobile = true
 
 local FluxLib = Instance.new("ScreenGui")
 FluxLib.Name = "FluxLib"
@@ -96,16 +96,25 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	local fs = false
 	
 	-- Mobile detection and screen size calculation
-	local forceMobile = true 
+	local forceMobile = false -- Set to true for testing mobile mode
 	local isMobile = forceMobile or (UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled)
 	local screenSize = workspace.CurrentCamera.ViewportSize
 	local scaleFactor = math.min(screenSize.X / 1920, screenSize.Y / 1080) -- Base scale on 1920x1080
 	scaleFactor = math.max(scaleFactor, 0.5) -- Minimum scale factor
 	
 	-- Dynamic sizing based on screen
-	local baseWidth = isMobile and math.min(screenSize.X * 0.95, 600) or 706
-	local baseHeight = isMobile and math.min(screenSize.Y * 0.8, 500) or 484
+	local baseWidth = isMobile and math.min(screenSize.X * 0.95, 600) or math.min(screenSize.X * 0.6, 706)
+	local baseHeight = isMobile and math.min(screenSize.Y * 0.8, 500) or math.min(screenSize.Y * 0.7, 484)
 	local leftPanelWidth = isMobile and math.min(baseWidth * 0.35, 180) or 205
+	
+	-- Calculate content area size
+	local contentWidth = baseWidth - leftPanelWidth - 20 -- 20px padding
+	local contentHeight = baseHeight - 40 -- 40px for top padding
+	local elementWidth = contentWidth - 13 -- Account for scrollbar and padding
+	local elementHeight = isMobile and 38 or 43 -- Smaller elements on mobile
+	local sliderHeight = isMobile and 50 or 60 -- Smaller slider on mobile
+	local textSize = isMobile and 13 or 15 -- Smaller text on mobile
+	local descTextSize = isMobile and 12 or 15 -- Even smaller description text
 	
 	local MainFrame = Instance.new("Frame")
 	local MainCorner = Instance.new("UICorner")
@@ -206,13 +215,14 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	-- Mobile minimize button
 	MinimizeBtn.Name = "MinimizeBtn"
 	MinimizeBtn.Parent = MainFrame
-	MinimizeBtn.BackgroundColor3 = PresetColor
-	MinimizeBtn.Position = UDim2.new(1, -45, 0, 5)
-	MinimizeBtn.Size = UDim2.new(0, 35, 0, 25)
+	MinimizeBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+	MinimizeBtn.BorderSizePixel = 0
+	MinimizeBtn.Position = UDim2.new(1, -40, 0, 8)
+	MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
 	MinimizeBtn.Font = Enum.Font.GothamBold
-	MinimizeBtn.Text = "_"
+	MinimizeBtn.Text = "−"
 	MinimizeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-	MinimizeBtn.TextSize = 18
+	MinimizeBtn.TextSize = 20
 	MinimizeBtn.Visible = isMobile
 
 	MinimizeBtnCorner.CornerRadius = UDim.new(0, 4)
@@ -221,17 +231,19 @@ function Flux:Window(text, bottom,mainclr,toclose)
 	-- Mobile floating restore button (appears when minimized)
 	RestoreBtn.Name = "RestoreBtn"
 	RestoreBtn.Parent = FluxLib
-	RestoreBtn.BackgroundColor3 = PresetColor
-	RestoreBtn.Position = UDim2.new(0.5, -60, 0, 10)
-	RestoreBtn.Size = UDim2.new(0, 120, 0, 35)
+	RestoreBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	RestoreBtn.BorderSizePixel = 1
+	RestoreBtn.BorderColor3 = Color3.fromRGB(60, 60, 60)
+	RestoreBtn.Position = UDim2.new(0.5, -20, 0, 10)
+	RestoreBtn.Size = UDim2.new(0, 40, 0, 40)
 	RestoreBtn.Font = Enum.Font.GothamBold
-	RestoreBtn.Text = "📱 Show GUI"
+	RestoreBtn.Text = "✕"
 	RestoreBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-	RestoreBtn.TextSize = 14
+	RestoreBtn.TextSize = 18
 	RestoreBtn.Visible = false
 	RestoreBtn.ZIndex = 1000
 
-	RestoreBtnCorner.CornerRadius = UDim.new(0, 8)
+	RestoreBtnCorner.CornerRadius = UDim.new(0, 4)
 	RestoreBtnCorner.Parent = RestoreBtn
 
 	ContainerFolder.Name = "ContainerFolder"
@@ -254,12 +266,30 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		end
 	end)
 	
+	-- Minimize button hover effects
+	MinimizeBtn.MouseEnter:Connect(function()
+		TweenService:Create(MinimizeBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(70, 70, 70)}):Play()
+	end)
+	
+	MinimizeBtn.MouseLeave:Connect(function()
+		TweenService:Create(MinimizeBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(45, 45, 45)}):Play()
+	end)
+	
 	-- Restore button functionality
 	RestoreBtn.MouseButton1Click:Connect(function()
 		-- Show main GUI and hide restore button
 		MainFrame.Visible = true
 		RestoreBtn.Visible = false
 		minimized = false
+	end)
+	
+	-- Restore button hover effects
+	RestoreBtn.MouseEnter:Connect(function()
+		TweenService:Create(RestoreBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+	end)
+	
+	RestoreBtn.MouseLeave:Connect(function()
+		TweenService:Create(RestoreBtn, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
 	end)
 	
 	UserInputService.InputBegan:Connect(
@@ -522,7 +552,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		Container.BackgroundTransparency = 1.000
 		Container.BorderSizePixel = 0
 		Container.Position = UDim2.new(0.321529746, 0, 0.0475206599, 0)
-		Container.Size = UDim2.new(0, 470, 0, 438)
+		Container.Size = UDim2.new(0, contentWidth, 0, contentHeight)
 		Container.CanvasSize = UDim2.new(0, 0, 0, 0)
 		Container.ScrollBarThickness = 5
 		Container.Visible = false
@@ -531,7 +561,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 		ContainerLayout.Name = "ContainerLayout"
 		ContainerLayout.Parent = Container
 		ContainerLayout.SortOrder = Enum.SortOrder.LayoutOrder
-		ContainerLayout.Padding = UDim.new(0, 15)
+		ContainerLayout.Padding = UDim.new(0, isMobile and 8 or 15)
 		
 		if fs == false then
 			fs = true
@@ -605,7 +635,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Button.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Button.ClipsDescendants = true
 			Button.Position = UDim2.new(0.370312512, 0, 0.552631557, 0)
-			Button.Size = UDim2.new(0, 457, 0, 43)
+			Button.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			Button.AutoButtonColor = false
 			Button.Font = Enum.Font.SourceSans
 			Button.Text = ""
@@ -625,7 +655,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Title.Font = Enum.Font.Gotham
 			Title.Text = text
 			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Title.TextSize = 15.000
+			Title.TextSize = textSize
 			Title.TextTransparency = 0.300
 			Title.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -659,11 +689,11 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Description.BackgroundTransparency = 1.000
 			Description.Position = UDim2.new(-0.200942323, 0, 0.785714269, 0)
-			Description.Size = UDim2.new(0, 432, 0, 31)
+			Description.Size = UDim2.new(0, elementWidth - 25, 0, 31)
 			Description.Font = Enum.Font.Gotham
 			Description.Text = desc
 			Description.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Description.TextSize = 15.000
+			Description.TextSize = descTextSize
 			Description.TextTransparency = 1
 			Description.TextWrapped = true
 			Description.TextXAlignment = Enum.TextXAlignment.Left
@@ -828,7 +858,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Toggle.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Toggle.ClipsDescendants = true
 			Toggle.Position = UDim2.new(0.110937506, 0, 0.67653507, 0)
-			Toggle.Size = UDim2.new(0, 457, 0, 43)
+			Toggle.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			Toggle.AutoButtonColor = false
 			Toggle.Font = Enum.Font.SourceSans
 			Toggle.Text = ""
@@ -902,7 +932,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Description.BackgroundTransparency = 1.000
 			Description.Position = UDim2.new(-0.200942323, 0, 0.785714269, 0)
-			Description.Size = UDim2.new(0, 432, 0, 31)
+			Description.Size = UDim2.new(0, elementWidth - 25, 0, 31)
 			Description.Font = Enum.Font.Gotham
 			Description.Text = desc
 			Description.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1099,7 +1129,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Slider.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Slider.ClipsDescendants = true
 			Slider.Position = UDim2.new(0.189062506, 0, 0.648612201, 0)
-			Slider.Size = UDim2.new(0, 457, 0, 60)
+			Slider.Size = UDim2.new(0, elementWidth, 0, sliderHeight)
 			Slider.AutoButtonColor = false
 			Slider.Font = Enum.Font.SourceSans
 			Slider.Text = ""
@@ -1154,7 +1184,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Description.BackgroundTransparency = 1.000
 			Description.Position = UDim2.new(-0.201000005, 0, 1.38600004, 0)
-			Description.Size = UDim2.new(0, 432, 0, 31)
+			Description.Size = UDim2.new(0, elementWidth - 25, 0, 31)
 			Description.Font = Enum.Font.Gotham
 			Description.Text = desc
 			Description.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1394,7 +1424,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Dropdown.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Dropdown.ClipsDescendants = true
 			Dropdown.Position = UDim2.new(0.110937499, 0, 0.67653507, 0)
-			Dropdown.Size = UDim2.new(0, 457, 0, 43)
+			Dropdown.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			Dropdown.AutoButtonColor = false
 			Dropdown.Font = Enum.Font.SourceSans
 			Dropdown.Text = ""
@@ -1895,7 +1925,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Colorpicker.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Colorpicker.ClipsDescendants = true
 			Colorpicker.Position = UDim2.new(0.110937499, 0, 0.67653507, 0)
-			Colorpicker.Size = UDim2.new(0, 457, 0, 43)
+			Colorpicker.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 
 			ColorpickerCorner.CornerRadius = UDim.new(0, 4)
 			ColorpickerCorner.Name = "ColorpickerCorner"
@@ -1920,7 +1950,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			ColorpickerBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			ColorpickerBtn.BackgroundTransparency = 1.000
 			ColorpickerBtn.Position = UDim2.new(-0.336283177, 0, 0, 0)
-			ColorpickerBtn.Size = UDim2.new(0, 457, 0, 42)
+			ColorpickerBtn.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			ColorpickerBtn.Font = Enum.Font.SourceSans
 			ColorpickerBtn.Text = ""
 			ColorpickerBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -2358,7 +2388,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Line.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Line.ClipsDescendants = true
 			Line.Position = UDim2.new(0, 0, 0.70091325, 0)
-			Line.Size = UDim2.new(0, 457, 0, 4)
+			Line.Size = UDim2.new(0, elementWidth, 0, 4)
 			Line.AutoButtonColor = false
 			Line.Font = Enum.Font.SourceSans
 			Line.Text = ""
@@ -2381,7 +2411,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Label.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Label.ClipsDescendants = true
 			Label.Position = UDim2.new(0.370312512, 0, 0.552631557, 0)
-			Label.Size = UDim2.new(0, 457, 0, 43)
+			Label.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			Label.AutoButtonColor = false
 			Label.Font = Enum.Font.SourceSans
 			Label.Text = ""
@@ -2431,7 +2461,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Textbox.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Textbox.ClipsDescendants = true
 			Textbox.Position = UDim2.new(0.0459499061, 0, 0.734449744, 0)
-			Textbox.Size = UDim2.new(0, 457, 0, 43)
+			Textbox.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			Textbox.AutoButtonColor = false
 			Textbox.Font = Enum.Font.SourceSans
 			Textbox.Text = ""
@@ -2485,7 +2515,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Description.BackgroundTransparency = 1.000
 			Description.Position = UDim2.new(-0.200942323, 0, 0.985714269, 0)
-			Description.Size = UDim2.new(0, 432, 0, 31)
+			Description.Size = UDim2.new(0, elementWidth - 25, 0, 31)
 			Description.Font = Enum.Font.Gotham
 			Description.Text = desc
 			Description.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2656,7 +2686,7 @@ function Flux:Window(text, bottom,mainclr,toclose)
 			Bind.BackgroundColor3 = Color3.fromRGB(64, 68, 75)
 			Bind.ClipsDescendants = true
 			Bind.Position = UDim2.new(0.40625, 0, 0.828947306, 0)
-			Bind.Size = UDim2.new(0, 457, 0, 43)
+			Bind.Size = UDim2.new(0, elementWidth, 0, elementHeight)
 			Bind.AutoButtonColor = false
 			Bind.Font = Enum.Font.SourceSans
 			Bind.Text = ""
